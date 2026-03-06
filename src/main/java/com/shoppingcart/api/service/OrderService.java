@@ -1,6 +1,6 @@
 package com.shoppingcart.api.service;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.Client;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.exception.NotFoundException;
@@ -19,9 +19,9 @@ public class OrderService {
     private final ClientRepository clientRepository;
     private final OrderMapper orderMapper;
 
-    public OrderDtos.OrderResponse createOrder(OrderDtos.CreateOrderRequest request) {
-        Client client = request.clientId() != null
-                ? clientService.findById(request.clientId())
+    public OrderResponse createOrder(CreateOrderRequest request) {
+        Client client = request.getClientId() != null
+                ? clientService.findById(request.getClientId())
                 : getOrCreateDefaultClient();
 
         OrderEntity order = orderMapper.toEntity(client);
@@ -33,7 +33,7 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("Order not found"));
     }
 
-    public OrderDtos.OrderResponse getOrder(Long id) {
+    public OrderResponse getOrder(Long id) {
         return orderMapper.toResponse(getOrderEntity(id));
     }
 

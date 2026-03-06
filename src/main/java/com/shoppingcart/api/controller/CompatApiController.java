@@ -2,7 +2,7 @@ package com.shoppingcart.api.controller;
 
 import com.shoppingcart.api.dto.AuthDtos;
 import com.shoppingcart.api.dto.CompatDtos;
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.*;
 import com.shoppingcart.api.exception.BadRequestException;
 import com.shoppingcart.api.exception.NotFoundException;
@@ -141,11 +141,11 @@ public class CompatApiController {
     @PostMapping("/paymentOrder")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<CompatDtos.PaymentResponseCompat> createPayment(@RequestBody CompatDtos.PaymentRequestCompat request) {
-        OrderDtos.PaymentResponse response = paymentService.pay(new OrderDtos.PaymentRequest(request.idOrder(), request.number_card(), request.names()));
+        PaymentResponse response = paymentService.pay(new PaymentRequest(request.idOrder(), request.number_card(), request.names()));
         return ResponseEntity.ok(new CompatDtos.PaymentResponseCompat(
-                response.paymentId(),
-                response.orderId(),
-                response.status(),
+                response.getPaymentId(),
+                response.getOrderId(),
+                response.getStatus(),
                 request.names(),
                 request.surnames(),
                 request.email(),

@@ -1,6 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.mapper.OrderMapper;
 import com.shoppingcart.api.service.OrderDetailService;
@@ -47,7 +47,7 @@ class OrderControllerTest {
 
     @Test
     void shouldCreateOrder() throws Exception {
-        when(orderService.createOrder(any())).thenReturn(new OrderDtos.OrderResponse(1L, 1L, null, LocalDateTime.now()));
+        when(orderService.createOrder(any())).thenReturn(new OrderResponse(1L, 1L, null, LocalDateTime.now()));
 
         mockMvc.perform(post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ class OrderControllerTest {
         when(orderService.getOrderEntity(1L)).thenReturn(OrderEntity.builder().id(1L).build());
         when(orderDetailService.getDetailsByOrder(1L)).thenReturn(List.of());
         when(orderMapper.toFullResponse(any(), any())).thenReturn(
-                new OrderDtos.FullOrderResponse(new OrderDtos.OrderResponse(1L, 1L, null, LocalDateTime.now()), List.of())
+                new FullOrderResponse(new OrderResponse(1L, 1L, null, LocalDateTime.now()), List.of())
         );
 
         mockMvc.perform(get("/api/orders/1"))

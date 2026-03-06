@@ -1,6 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class PaymentController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<OrderDtos.PaymentResponse> pay(@Valid @RequestBody OrderDtos.PaymentRequest request) {
+    public ResponseEntity<PaymentResponse> pay(@Valid @RequestBody PaymentRequest request) {
         return ResponseEntity.ok(paymentService.pay(request));
     }
 }

@@ -1,6 +1,6 @@
 package com.shoppingcart.api.service;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.entity.OrderStatus;
 import com.shoppingcart.api.entity.Payment;
@@ -22,22 +22,22 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
 
-    public OrderDtos.PaymentResponse pay(OrderDtos.PaymentRequest request) {
-        if (request.orderId() == null) {
+    public PaymentResponse pay(PaymentRequest request) {
+        if (request.getOrderId() == null) {
             throw new BadRequestException("orderId is required");
         }
 
-        OrderEntity order = orderService.getOrderEntity(request.orderId());
+        OrderEntity order = orderService.getOrderEntity(request.getOrderId());
         if (order.getStatus() == OrderStatus.PAID) {
             throw new BadRequestException("Order is already paid");
         }
 
-        BigDecimal totalAmount = orderDetailService.calculateOrderTotal(request.orderId());
+        BigDecimal totalAmount = orderDetailService.calculateOrderTotal(request.getOrderId());
         if (totalAmount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new BadRequestException("Order has no items");
         }
 
-        boolean approved = request.cardNumber() != null && request.cardNumber().length() >= 8;
+        boolean approved = request.getCardNumber() != null && request.getCardNumber().length() >= 8;
         PaymentStatus paymentStatus = approved ? PaymentStatus.APPROVED : PaymentStatus.DECLINED;
 
         Payment payment = paymentMapper.toEntity(order, totalAmount, paymentStatus);

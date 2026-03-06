@@ -1,6 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.mapper.OrderMapper;
 import com.shoppingcart.api.service.OrderDetailService;
 import com.shoppingcart.api.service.OrderService;
@@ -21,13 +21,13 @@ public class OrderController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<OrderDtos.OrderResponse> createOrder(@Valid @RequestBody OrderDtos.CreateOrderRequest request) {
+    public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody CreateOrderRequest request) {
         return ResponseEntity.ok(orderService.createOrder(request));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<OrderDtos.FullOrderResponse> getOrder(@PathVariable Long id) {
+    public ResponseEntity<FullOrderResponse> getOrder(@PathVariable Long id) {
         var orderEntity = orderService.getOrderEntity(id);
         var details = orderDetailService.getDetailsByOrder(id);
         return ResponseEntity.ok(orderMapper.toFullResponse(orderEntity, details));

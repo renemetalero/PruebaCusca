@@ -1,6 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.service.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class PaymentControllerTest {
 
     @Test
     void shouldPayOrder() throws Exception {
-        when(paymentService.pay(any())).thenReturn(new OrderDtos.PaymentResponse(1L, 1L, "APPROVED", BigDecimal.TEN));
+        when(paymentService.pay(any())).thenReturn(new PaymentResponse(1L, 1L, "APPROVED", BigDecimal.TEN));
 
         mockMvc.perform(post("/api/payments")
                         .contentType(MediaType.APPLICATION_JSON)
