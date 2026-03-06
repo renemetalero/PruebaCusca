@@ -11,3 +11,7 @@ spring:
   sql:
     init:
       mode: never
+
+external:
+  fakestore:
+    base-url: https://fakestoreapi.com
