@@ -91,17 +91,18 @@ mvn spring-boot:run
 
 ### Orders
 
-- `POST /api/orders`
+- `POST /api/orders` (accepts `clientId` or compat alias `idClient`)
 - `GET /api/orders/{id}`
 
 ### Order Details
 
 - `POST /api/details/order/{orderId}`
+- `POST /api/details` (compat body with `idOrder` + `idProduct`)
 - `GET /api/details/order/{orderId}`
 
 ### Payments
 
-- `POST /api/payments`
+- `POST /api/payments` (accepts `orderId`/`cardNumber`/`cardHolder` and compat aliases `idOrder`/`number_card`/`names`)
 
 ## Authentication flow
 

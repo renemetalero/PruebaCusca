@@ -1,6 +1,5 @@
 package com.shoppingcart.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingcart.api.dto.OrderDtos;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.mapper.OrderMapper;
@@ -40,7 +39,6 @@ class OrderControllerTest {
     private OrderController orderController;
 
     private MockMvc mockMvc;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -53,7 +51,9 @@ class OrderControllerTest {
 
         mockMvc.perform(post("/api/orders")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new OrderDtos.CreateOrderRequest(1L))))
+                        .content("""
+                                {"idClient":1}
+                                """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
     }
