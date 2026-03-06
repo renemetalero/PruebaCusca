@@ -1,6 +1,6 @@
 package com.shoppingcart.api.mapper;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.entity.Payment;
 import com.shoppingcart.api.entity.PaymentStatus;
@@ -21,8 +21,8 @@ public class PaymentMapper {
                 .build();
     }
 
-    public OrderDtos.PaymentResponse toResponse(Payment payment) {
-        return new OrderDtos.PaymentResponse(
+    public PaymentResponse toResponse(Payment payment) {
+        return new PaymentResponse(
                 payment.getId(),
                 payment.getOrder().getId(),
                 payment.getStatus().name(),

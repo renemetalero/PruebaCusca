@@ -1,6 +1,6 @@
 package com.shoppingcart.api.mapper;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.entity.Payment;
 import com.shoppingcart.api.entity.PaymentStatus;
@@ -21,10 +21,10 @@ class PaymentMapperTest {
         Payment payment = mapper.toEntity(order, new BigDecimal("100.00"), PaymentStatus.APPROVED);
         payment.setId(8L);
 
-        OrderDtos.PaymentResponse response = mapper.toResponse(payment);
+        PaymentResponse response = mapper.toResponse(payment);
 
         assertNotNull(payment.getProcessedAt());
-        assertEquals(8L, response.paymentId());
-        assertEquals("APPROVED", response.status());
+        assertEquals(8L, response.getPaymentId());
+        assertEquals("APPROVED", response.getStatus());
     }
 }

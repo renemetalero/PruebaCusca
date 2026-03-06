@@ -1,6 +1,6 @@
 package com.shoppingcart.api.service;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.entity.OrderStatus;
 import com.shoppingcart.api.entity.Payment;
@@ -46,12 +46,12 @@ class PaymentServiceTest {
         when(orderDetailService.calculateOrderTotal(1L)).thenReturn(new BigDecimal("100.00"));
         when(paymentMapper.toEntity(order, new BigDecimal("100.00"), PaymentStatus.APPROVED)).thenReturn(payment);
         when(paymentRepository.save(payment)).thenReturn(saved);
-        when(paymentMapper.toResponse(saved)).thenReturn(new OrderDtos.PaymentResponse(5L, 1L, "APPROVED", new BigDecimal("100.00")));
+        when(paymentMapper.toResponse(saved)).thenReturn(new PaymentResponse(5L, 1L, "APPROVED", new BigDecimal("100.00")));
 
-        OrderDtos.PaymentResponse response = paymentService.pay(new OrderDtos.PaymentRequest(1L, "12345678", "John"));
+        PaymentResponse response = paymentService.pay(new PaymentRequest(1L, "12345678", "John"));
 
-        assertEquals("APPROVED", response.status());
-        assertEquals(5L, response.paymentId());
+        assertEquals("APPROVED", response.getStatus());
+        assertEquals(5L, response.getPaymentId());
     }
 
     @Test
@@ -61,6 +61,6 @@ class PaymentServiceTest {
         when(orderDetailService.calculateOrderTotal(1L)).thenReturn(BigDecimal.ZERO);
 
         assertThrows(BadRequestException.class,
-                () -> paymentService.pay(new OrderDtos.PaymentRequest(1L, "12345678", "John")));
+                () -> paymentService.pay(new PaymentRequest(1L, "12345678", "John")));
     }
 }

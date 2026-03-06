@@ -1,7 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.service.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,6 @@ class PaymentControllerTest {
     private PaymentController paymentController;
 
     private MockMvc mockMvc;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -40,11 +38,13 @@ class PaymentControllerTest {
 
     @Test
     void shouldPayOrder() throws Exception {
-        when(paymentService.pay(any())).thenReturn(new OrderDtos.PaymentResponse(1L, 1L, "APPROVED", BigDecimal.TEN));
+        when(paymentService.pay(any())).thenReturn(new PaymentResponse(1L, 1L, "APPROVED", BigDecimal.TEN));
 
         mockMvc.perform(post("/api/payments")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new OrderDtos.PaymentRequest(1L, "12345678", "John"))))
+                        .content("""
+                                {"idOrder":1,"number_card":"12345678","names":"John"}
+                                """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.paymentId").value(1));
     }
