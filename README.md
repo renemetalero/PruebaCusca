@@ -178,3 +178,9 @@ The API returns a standardized error payload:
 A Postman collection with all endpoints is included at:
 
 - `postman/ShoppingCartApi.postman_collection.json`
+
+## Technical PDF documentation
+
+Detailed documentation (architecture, endpoints, libraries, security flow, and API behavior):
+
+- `docs/API_DOCUMENTATION.pdf`
