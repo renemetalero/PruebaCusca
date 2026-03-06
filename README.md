@@ -15,7 +15,7 @@ Backend implementation for a shopping cart platform using Java + Spring Boot.
 - Validation and centralized error handling.
 - Dedicated DTO + Mapper layer to avoid exposing entities from controllers.
 - Unit tests with JUnit + Mockito.
-- In-memory H2 database for quick local execution.
+- MySQL-ready schema scripts with indexes and constraints for good query performance.
 
 ## Tech Stack
 
@@ -23,9 +23,30 @@ Backend implementation for a shopping cart platform using Java + Spring Boot.
 - Spring Boot 3.3
 - Spring Web, Spring Security, Spring Data JPA, Validation
 - JWT (`io.jsonwebtoken`)
-- H2 Database
+- MySQL 8
 - springdoc-openapi
 - JUnit 5 + Mockito
+
+## Database setup (MySQL)
+
+Scripts are located in:
+
+- `db/mysql/01_create_schema.sql`
+- `db/mysql/02_seed_data.sql`
+
+Run them in order:
+
+```bash
+mysql -u root -p < db/mysql/01_create_schema.sql
+mysql -u root -p < db/mysql/02_seed_data.sql
+```
+
+Default local connection used by `application.yml`:
+
+- Database: `shopping_cart_db`
+- User: `root`
+- Password: `root`
+- URL: `jdbc:mysql://localhost:3306/shopping_cart_db`
 
 ## Run locally
 
@@ -33,21 +54,23 @@ Backend implementation for a shopping cart platform using Java + Spring Boot.
 
 - Java 17+
 - Maven 3.9+
+- MySQL 8+
 
 ### Steps
 
 1. Clone repository.
-2. Run:
+2. Create database schema with scripts in `db/mysql`.
+3. Adjust credentials in `src/main/resources/application.yml` if needed.
+4. Run:
 
 ```bash
 mvn spring-boot:run
 ```
 
-3. Access:
+5. Access:
    - API base: `http://localhost:8080`
    - Swagger UI: `http://localhost:8080/swagger-ui.html`
    - OpenAPI docs: `http://localhost:8080/api-docs`
-   - H2 console: `http://localhost:8080/h2-console`
 
 ## API Endpoints
 
@@ -97,6 +120,8 @@ Run tests with:
 ```bash
 mvn test
 ```
+
+> `src/test/resources/application.yml` uses H2 in-memory so unit tests can run without MySQL.
 
 ## Error handling
 
