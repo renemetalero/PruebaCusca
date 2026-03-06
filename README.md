@@ -113,6 +113,41 @@ mvn spring-boot:run
 Authorization: Bearer <token>
 ```
 
+### How to generate a JWT (step by step)
+
+1. Register a user:
+
+```bash
+curl -X POST http://localhost:8080/api/security/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"john","password":"12345678"}'
+```
+
+2. Or login with an existing user:
+
+```bash
+curl -X POST http://localhost:8080/api/security/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"john","password":"12345678"}'
+```
+
+3. The API returns:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9...",
+  "tokenType": "Bearer",
+  "expiresInSeconds": 7200
+}
+```
+
+4. Use the token in protected endpoints:
+
+```bash
+curl http://localhost:8080/api/clients \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9..."
+```
+
 ## Tests
 
 Run tests with:
