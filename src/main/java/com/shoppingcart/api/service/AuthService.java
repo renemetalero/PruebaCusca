@@ -10,6 +10,7 @@ import com.shoppingcart.api.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +56,32 @@ public class AuthService {
                 .tokenType("Bearer")
                 .expiresInSeconds(jwtService.getExpirationSeconds())
                 .build();
+    }
+
+    public AuthDtos.AuthResponse renewToken(String token) {
+        String username = jwtService.extractUsername(token);
+        AppUser user = appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException("Invalid token"));
+
+        String newToken = jwtService.generateToken(user.getUsername(), user.getRole().name());
+        return AuthDtos.AuthResponse.builder()
+                .token(newToken)
+                .tokenType("Bearer")
+                .expiresInSeconds(jwtService.getExpirationSeconds())
+                .build();
+    }
+
+    public AuthDtos.AuthResponse loginOrRegister(AuthDtos.LoginRequest request) {
+        try {
+            return login(request);
+        } catch (BadCredentialsException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            if (!appUserRepository.existsByUsername(request.username())) {
+                register(new AuthDtos.RegisterRequest(request.username(), request.password()));
+                return login(request);
+            }
+            throw ex;
+        }
     }
 }
