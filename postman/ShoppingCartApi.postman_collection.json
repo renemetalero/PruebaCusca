@@ -1,0 +1,86 @@
+{
+  "info": {
+    "name": "Shopping Cart API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/security/register", "host": ["{{baseUrl}}"], "path": ["api","security","register"] },
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"john\",\n  \"password\": \"12345678\"\n}" }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": { "raw": "{{baseUrl}}/api/security/login", "host": ["{{baseUrl}}"], "path": ["api","security","login"] },
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"john\",\n  \"password\": \"12345678\"\n}" }
+      }
+    },
+    {
+      "name": "Get Products",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api","products"] }
+      }
+    },
+    {
+      "name": "Create Client",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/clients", "host": ["{{baseUrl}}"], "path": ["api","clients"] },
+        "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@doe.com\"\n}" }
+      }
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api","orders"] },
+        "body": { "mode": "raw", "raw": "{\n  \"clientId\": 1\n}" }
+      }
+    },
+    {
+      "name": "Add Order Detail",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/details/order/1", "host": ["{{baseUrl}}"], "path": ["api","details","order","1"] },
+        "body": { "mode": "raw", "raw": "{\n  \"productId\": 1,\n  \"quantity\": 2\n}" }
+      }
+    },
+    {
+      "name": "Pay Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}/api/payments", "host": ["{{baseUrl}}"], "path": ["api","payments"] },
+        "body": { "mode": "raw", "raw": "{\n  \"orderId\": 1,\n  \"cardNumber\": \"1234567890\",\n  \"cardHolder\": \"John Doe\"\n}" }
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "token", "value": "" }
+  ]
+}
