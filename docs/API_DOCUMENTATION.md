@@ -163,7 +163,7 @@ Request body:
 
 ```json
 {
-  "clientId": 1
+  "idClient": 1
 }
 ```
 
@@ -181,7 +181,20 @@ Request body:
 
 ```json
 {
-  "productId": 1,
+  "idProduct": 1,
+  "quantity": 2
+}
+```
+
+#### `POST /api/details`
+Compatibility format using body-only identifiers.
+
+Request body:
+
+```json
+{
+  "idOrder": 1,
+  "idProduct": 1,
   "quantity": 2
 }
 ```
@@ -200,9 +213,9 @@ Request body:
 
 ```json
 {
-  "orderId": 1,
-  "cardNumber": "1234567890",
-  "cardHolder": "John Doe"
+  "idOrder": 1,
+  "number_card": "1234567890",
+  "names": "John Doe"
 }
 ```
 

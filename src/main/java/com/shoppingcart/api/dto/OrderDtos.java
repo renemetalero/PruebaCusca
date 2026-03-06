@@ -1,5 +1,6 @@
 package com.shoppingcart.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.shoppingcart.api.entity.OrderStatus;
 
 import java.math.BigDecimal;
@@ -8,10 +9,12 @@ import java.util.List;
 
 public class OrderDtos {
 
-    public record CreateOrderRequest(Long clientId) {
+    public record CreateOrderRequest(@JsonAlias("idClient") Long clientId) {
     }
 
-    public record OrderDetailRequest(Long productId, Integer quantity) {
+    public record OrderDetailRequest(@JsonAlias("idOrder") Long orderId,
+                                     @JsonAlias("idProduct") Long productId,
+                                     Integer quantity) {
     }
 
     public record OrderResponse(Long id, Long clientId, OrderStatus status, LocalDateTime createdAt) {
@@ -21,7 +24,9 @@ public class OrderDtos {
                                       BigDecimal unitPrice, BigDecimal lineTotal) {
     }
 
-    public record PaymentRequest(Long orderId, String cardNumber, String cardHolder) {
+    public record PaymentRequest(@JsonAlias("idOrder") Long orderId,
+                                 @JsonAlias("number_card") String cardNumber,
+                                 @JsonAlias("names") String cardHolder) {
     }
 
     public record PaymentResponse(Long paymentId, Long orderId, String status, BigDecimal amount) {

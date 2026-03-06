@@ -37,7 +37,7 @@ class OrderDetailServiceTest {
     @Test
     void shouldThrowWhenQuantityInvalid() {
         assertThrows(BadRequestException.class,
-                () -> orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(1L, 0)));
+                () -> orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(null, 1L, 0)));
     }
 
     @Test
@@ -65,7 +65,7 @@ class OrderDetailServiceTest {
         when(orderDetailRepository.save(entity)).thenReturn(entity);
         when(orderDetailMapper.toResponse(entity)).thenReturn(response);
 
-        OrderDtos.OrderDetailResponse result = orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(1L, 2));
+        OrderDtos.OrderDetailResponse result = orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(null, 1L, 2));
 
         assertEquals(7L, result.id());
     }
