@@ -34,6 +34,22 @@ public class Payment {
     @Column(name = "status", nullable = false, length = 20)
     private PaymentStatus status;
 
+    @Column(name = "payer_names", length = 120)
+    private String payerNames;
+
+    @Column(name = "payer_surnames", length = 120)
+    private String payerSurnames;
+
+    @Column(name = "payer_email", length = 180)
+    private String payerEmail;
+
+    @Column(name = "payer_phone", length = 40)
+    private String payerPhone;
+
     @Column(name = "processed_at", nullable = false)
     private LocalDateTime processedAt;
+
+    @Column(name = "enabled", nullable = false)
+    @Builder.Default
+    private Boolean enabled = true;
 }
