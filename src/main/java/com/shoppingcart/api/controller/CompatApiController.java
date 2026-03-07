@@ -141,11 +141,18 @@ public class CompatApiController {
     @PostMapping("/paymentOrder")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<CompatDtos.PaymentResponseCompat> createPayment(@RequestBody CompatDtos.PaymentRequestCompat request) {
-        PaymentResponse response = paymentService.pay(new PaymentRequest(request.idOrder(), request.number_card(), request.names()));
+        PaymentRegistrationRequest paymentRequest = new PaymentRegistrationRequest();
+        paymentRequest.setIdOrder(request.idOrder());
+        paymentRequest.setNames(request.names());
+        paymentRequest.setSurnames(request.surnames());
+        paymentRequest.setEmail(request.email());
+        paymentRequest.setPhone(request.phone());
+        paymentRequest.setNumber_card(request.number_card());
+        PaymentRegistrationResponse response = paymentService.createPayment(paymentRequest);
         return ResponseEntity.ok(new CompatDtos.PaymentResponseCompat(
-                response.getPaymentId(),
-                response.getOrderId(),
-                response.getStatus(),
+                response.getId(),
+                response.getIdOrder(),
+                response.getPaymentStatus(),
                 request.names(),
                 request.surnames(),
                 request.email(),
@@ -160,19 +167,25 @@ public class CompatApiController {
             throw new BadRequestException("id is required");
         }
 
-        Payment payment = paymentRepository.findById(request.id())
-                .orElseThrow(() -> new NotFoundException("Payment not found"));
-        payment.setStatus(mapPaymentStatus(request.number_card()));
-        Payment updated = paymentRepository.save(payment);
+        PaymentRegistrationRequest paymentRequest = new PaymentRegistrationRequest();
+        paymentRequest.setId(request.id());
+        paymentRequest.setIdOrder(request.idOrder());
+        paymentRequest.setNames(request.names());
+        paymentRequest.setSurnames(request.surnames());
+        paymentRequest.setEmail(request.email());
+        paymentRequest.setPhone(request.phone());
+        paymentRequest.setNumber_card(request.number_card());
+
+        PaymentRegistrationResponse updated = paymentService.updatePayment(paymentRequest);
 
         return ResponseEntity.ok(new CompatDtos.PaymentResponseCompat(
                 updated.getId(),
-                updated.getOrder().getId(),
-                updated.getStatus().name(),
-                request.names(),
-                request.surnames(),
-                request.email(),
-                request.phone()
+                updated.getIdOrder(),
+                updated.getPaymentStatus(),
+                updated.getNames(),
+                updated.getSurnames(),
+                updated.getEmail(),
+                updated.getPhone()
         ));
     }
 

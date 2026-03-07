@@ -2,5 +2,6 @@ package com.shoppingcart.api.entity;
 
 public enum PaymentStatus {
     APPROVED,
-    DECLINED
+    DECLINED,
+    DISABLED
 }

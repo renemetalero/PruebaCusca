@@ -1,9 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.*;
-import com.shoppingcart.api.entity.OrderEntity;
-import com.shoppingcart.api.mapper.OrderMapper;
-import com.shoppingcart.api.service.OrderDetailService;
+import com.shoppingcart.api.dto.OrderRegistrationResponse;
 import com.shoppingcart.api.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,10 +27,6 @@ class OrderControllerTest {
 
     @Mock
     private OrderService orderService;
-    @Mock
-    private OrderDetailService orderDetailService;
-    @Mock
-    private OrderMapper orderMapper;
 
     @InjectMocks
     private OrderController orderController;
@@ -47,12 +40,12 @@ class OrderControllerTest {
 
     @Test
     void shouldCreateOrder() throws Exception {
-        when(orderService.createOrder(any())).thenReturn(new OrderResponse(1L, 1L, null, LocalDateTime.now()));
+        when(orderService.createOrder(any())).thenReturn(new OrderRegistrationResponse(1L, "John", BigDecimal.TEN, "CREATED", null, null, true, List.of()));
 
-        mockMvc.perform(post("/api/orders")
+        mockMvc.perform(post("/api/orderRegistration")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"idClient":1}
+                                {"customer":"John","orderStatus":"C","details":[]}
                                 """))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1));
@@ -60,14 +53,10 @@ class OrderControllerTest {
 
     @Test
     void shouldGetOrder() throws Exception {
-        when(orderService.getOrderEntity(1L)).thenReturn(OrderEntity.builder().id(1L).build());
-        when(orderDetailService.getDetailsByOrder(1L)).thenReturn(List.of());
-        when(orderMapper.toFullResponse(any(), any())).thenReturn(
-                new FullOrderResponse(new OrderResponse(1L, 1L, null, LocalDateTime.now()), List.of())
-        );
+        when(orderService.getOrder(1L)).thenReturn(new OrderRegistrationResponse(1L, "John", BigDecimal.TEN, "CREATED", null, null, true, List.of()));
 
-        mockMvc.perform(get("/api/orders/1"))
+        mockMvc.perform(get("/api/orderRegistration/getAnOrder/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.order.id").value(1));
+                .andExpect(jsonPath("$.id").value(1));
     }
 }

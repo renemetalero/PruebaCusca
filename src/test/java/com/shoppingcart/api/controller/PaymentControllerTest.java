@@ -1,6 +1,6 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.*;
+import com.shoppingcart.api.dto.PaymentRegistrationResponse;
 import com.shoppingcart.api.service.PaymentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,15 +37,15 @@ class PaymentControllerTest {
     }
 
     @Test
-    void shouldPayOrder() throws Exception {
-        when(paymentService.pay(any())).thenReturn(new PaymentResponse(1L, 1L, "APPROVED", BigDecimal.TEN));
+    void shouldCreatePayment() throws Exception {
+        when(paymentService.createPayment(any())).thenReturn(new PaymentRegistrationResponse(1L, 1L, "APPROVED", "John", "Doe", "a@a.com", "999", BigDecimal.TEN, true));
 
-        mockMvc.perform(post("/api/payments")
+        mockMvc.perform(post("/api/paymentOrder")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"idOrder":1,"number_card":"12345678","names":"John"}
+                                {"id":0,"idOrder":1,"names":"John","surnames":"Doe","email":"a@a.com","phone":"999","number_card":"12345678"}
                                 """))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.paymentId").value(1));
+                .andExpect(jsonPath("$.id").value(1));
     }
 }

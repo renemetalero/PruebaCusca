@@ -7,6 +7,7 @@ import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.exception.BadRequestException;
 import com.shoppingcart.api.mapper.OrderDetailMapper;
 import com.shoppingcart.api.repository.OrderDetailRepository;
+import com.shoppingcart.api.serviceImpl.OrderDetailServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,7 +33,7 @@ class OrderDetailServiceTest {
     private OrderDetailMapper orderDetailMapper;
 
     @InjectMocks
-    private OrderDetailService orderDetailService;
+    private OrderDetailServiceImpl orderDetailService;
 
     @Test
     void shouldThrowWhenQuantityInvalid() {
