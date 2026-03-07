@@ -1,6 +1,6 @@
 package com.shoppingcart.api.mapper;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.dto.ProductDto;
 import com.shoppingcart.api.entity.OrderDetail;
 import com.shoppingcart.api.entity.OrderEntity;
@@ -22,9 +22,9 @@ class OrderDetailMapperTest {
         OrderDetail entity = mapper.toEntity(order, product, 3);
         entity.setId(11L);
 
-        OrderDtos.OrderDetailResponse response = mapper.toResponse(entity);
+        OrderDetailResponse response = mapper.toResponse(entity);
 
-        assertEquals(11L, response.id());
-        assertEquals(new BigDecimal("60.00"), response.lineTotal());
+        assertEquals(11L, response.getId());
+        assertEquals(new BigDecimal("60.00"), response.getLineTotal());
     }
 }

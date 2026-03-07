@@ -1,6 +1,7 @@
 package com.shoppingcart.api.controller;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
+import com.shoppingcart.api.exception.BadRequestException;
 import com.shoppingcart.api.service.OrderDetailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,23 @@ public class OrderDetailController {
 
     @PostMapping("/order/{orderId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<OrderDtos.OrderDetailResponse> addDetail(@PathVariable Long orderId,
-                                                                   @Valid @RequestBody OrderDtos.OrderDetailRequest request) {
+    public ResponseEntity<OrderDetailResponse> addDetail(@PathVariable Long orderId,
+                                                                   @Valid @RequestBody OrderDetailRequest request) {
         return ResponseEntity.ok(orderDetailService.addDetail(orderId, request));
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    public ResponseEntity<OrderDetailResponse> addDetail(@Valid @RequestBody OrderDetailRequest request) {
+        if (request.getOrderId() == null) {
+            throw new BadRequestException("orderId is required");
+        }
+        return ResponseEntity.ok(orderDetailService.addDetail(request.getOrderId(), request));
     }
 
     @GetMapping("/order/{orderId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<List<OrderDtos.OrderDetailResponse>> getDetails(@PathVariable Long orderId) {
+    public ResponseEntity<List<OrderDetailResponse>> getDetails(@PathVariable Long orderId) {
         return ResponseEntity.ok(orderDetailService.getDetailsByOrder(orderId));
     }
 }
