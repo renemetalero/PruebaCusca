@@ -8,79 +8,486 @@
       "name": "Register",
       "request": {
         "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": { "raw": "{{baseUrl}}/api/security/register", "host": ["{{baseUrl}}"], "path": ["api","security","register"] },
-        "body": { "mode": "raw", "raw": "{\n  \"username\": \"john\",\n  \"password\": \"12345678\"\n}" }
-      }
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/security/register",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "security",
+            "register"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rene.user\",\n  \"password\": \"12345678\"\n}"
+        }
+      },
+      "response": []
     },
     {
       "name": "Login",
       "request": {
         "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "url": { "raw": "{{baseUrl}}/api/security/login", "host": ["{{baseUrl}}"], "path": ["api","security","login"] },
-        "body": { "mode": "raw", "raw": "{\n  \"username\": \"john\",\n  \"password\": \"12345678\"\n}" }
-      }
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/security/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "security",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"rene.user\",\n  \"password\": \"12345678\"\n}"
+        }
+      },
+      "response": []
     },
     {
       "name": "Get Products",
       "request": {
         "method": "GET",
-        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
-        "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api","products"] }
-      }
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/products",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        }
+      },
+      "response": []
     },
     {
-      "name": "Create Client",
+      "name": "OrderRegistration - Crear Rene",
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Authorization", "value": "Bearer {{token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
         ],
-        "url": { "raw": "{{baseUrl}}/api/clients", "host": ["{{baseUrl}}"], "path": ["api","clients"] },
-        "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@doe.com\"\n}" }
-      }
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"customer\": \"Rene\",\n  \"total\": 0,\n  \"orderStatus\": \"CREATED\",\n  \"paymentMethod\": \"CARD\",\n  \"paymentStatus\": \"PENDING\",\n  \"details\": [\n    {\n      \"id\": 0,\n      \"idProduct\": 1,\n      \"quantity\": 1,\n      \"price\": 109.95\n    },\n    {\n      \"id\": 0,\n      \"idProduct\": 2,\n      \"quantity\": 2,\n      \"price\": 22.3\n    }\n  ]\n}"
+        }
+      },
+      "response": []
     },
     {
-      "name": "Create Order",
+      "name": "OrderRegistration - Crear Jose",
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Authorization", "value": "Bearer {{token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
         ],
-        "url": { "raw": "{{baseUrl}}/api/orders", "host": ["{{baseUrl}}"], "path": ["api","orders"] },
-        "body": { "mode": "raw", "raw": "{\n  \"clientId\": 1\n}" }
-      }
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"customer\": \"Jose\",\n  \"total\": 0,\n  \"orderStatus\": \"CREATED\",\n  \"paymentMethod\": \"CARD\",\n  \"paymentStatus\": \"PENDING\",\n  \"details\": [\n    {\n      \"id\": 0,\n      \"idProduct\": 3,\n      \"quantity\": 1,\n      \"price\": 55.99\n    },\n    {\n      \"id\": 0,\n      \"idProduct\": 4,\n      \"quantity\": 1,\n      \"price\": 15.99\n    }\n  ]\n}"
+        }
+      },
+      "response": []
     },
     {
-      "name": "Add Order Detail",
+      "name": "OrderRegistration - Crear Alessa",
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Authorization", "value": "Bearer {{token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
         ],
-        "url": { "raw": "{{baseUrl}}/api/details/order/1", "host": ["{{baseUrl}}"], "path": ["api","details","order","1"] },
-        "body": { "mode": "raw", "raw": "{\n  \"productId\": 1,\n  \"quantity\": 2\n}" }
-      }
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"customer\": \"Alessa\",\n  \"total\": 0,\n  \"orderStatus\": \"CREATED\",\n  \"paymentMethod\": \"CARD\",\n  \"paymentStatus\": \"PENDING\",\n  \"details\": [\n    {\n      \"id\": 0,\n      \"idProduct\": 15,\n      \"quantity\": 1,\n      \"price\": 56.99\n    },\n    {\n      \"id\": 0,\n      \"idProduct\": 16,\n      \"quantity\": 1,\n      \"price\": 29.95\n    }\n  ]\n}"
+        }
+      },
+      "response": []
     },
     {
-      "name": "Pay Order",
+      "name": "OrderRegistration - Crear Valentina",
       "request": {
         "method": "POST",
         "header": [
-          { "key": "Content-Type", "value": "application/json" },
-          { "key": "Authorization", "value": "Bearer {{token}}" }
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
         ],
-        "url": { "raw": "{{baseUrl}}/api/payments", "host": ["{{baseUrl}}"], "path": ["api","payments"] },
-        "body": { "mode": "raw", "raw": "{\n  \"orderId\": 1,\n  \"cardNumber\": \"1234567890\",\n  \"cardHolder\": \"John Doe\"\n}" }
-      }
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"customer\": \"Valentina\",\n  \"total\": 0,\n  \"orderStatus\": \"CREATED\",\n  \"paymentMethod\": \"CARD\",\n  \"paymentStatus\": \"PENDING\",\n  \"details\": [\n    {\n      \"id\": 0,\n      \"idProduct\": 19,\n      \"quantity\": 2,\n      \"price\": 7.95\n    },\n    {\n      \"id\": 0,\n      \"idProduct\": 20,\n      \"quantity\": 1,\n      \"price\": 12.99\n    }\n  ]\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OrderRegistration - Editar (id=1)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"customer\": \"Rene\",\n  \"total\": 0,\n  \"orderStatus\": \"PAID\",\n  \"paymentMethod\": \"CARD\",\n  \"paymentStatus\": \"APPROVED\",\n  \"details\": [\n    {\n      \"id\": 0,\n      \"idProduct\": 1,\n      \"quantity\": 1,\n      \"price\": 109.95\n    },\n    {\n      \"id\": 0,\n      \"idProduct\": 5,\n      \"quantity\": 1,\n      \"price\": 695.0\n    }\n  ]\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OrderRegistration - Obtener todas",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration/getAllOrders",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration",
+            "getAllOrders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OrderRegistration - Obtener una (id=1)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration/getAnOrder/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration",
+            "getAnOrder",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "OrderRegistration - Deshabilitar (id=4)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orderRegistration/delete/4",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "orderRegistration",
+            "delete",
+            "4"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Crear pago Rene (order=1)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"idOrder\": 1,\n  \"names\": \"Rene\",\n  \"surnames\": \"Lopez\",\n  \"email\": \"rene@test.com\",\n  \"phone\": \"7777-1111\",\n  \"number_card\": \"4111111111111111\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Crear pago Jose (order=2)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 0,\n  \"idOrder\": 2,\n  \"names\": \"Jose\",\n  \"surnames\": \"Martinez\",\n  \"email\": \"jose@test.com\",\n  \"phone\": \"7777-2222\",\n  \"number_card\": \"55555555\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Editar pago (id=1)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"idOrder\": 1,\n  \"names\": \"Rene\",\n  \"surnames\": \"Lopez\",\n  \"email\": \"rene.actualizado@test.com\",\n  \"phone\": \"7777-9999\",\n  \"number_card\": \"4111111111111111\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Obtener todos",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder/getAllPayments",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder",
+            "getAllPayments"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Obtener uno (id=1)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder/getAPayment/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder",
+            "getAPayment",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PaymentOrder - Deshabilitar (id=2)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/paymentOrder/delete/2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "paymentOrder",
+            "delete",
+            "2"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
-    { "key": "baseUrl", "value": "http://localhost:8080" },
-    { "key": "token", "value": "" }
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
   ]
 }

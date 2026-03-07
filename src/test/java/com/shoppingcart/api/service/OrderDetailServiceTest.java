@@ -1,12 +1,13 @@
 package com.shoppingcart.api.service;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.dto.ProductDto;
 import com.shoppingcart.api.entity.OrderDetail;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.exception.BadRequestException;
 import com.shoppingcart.api.mapper.OrderDetailMapper;
 import com.shoppingcart.api.repository.OrderDetailRepository;
+import com.shoppingcart.api.serviceImpl.OrderDetailServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,18 +33,18 @@ class OrderDetailServiceTest {
     private OrderDetailMapper orderDetailMapper;
 
     @InjectMocks
-    private OrderDetailService orderDetailService;
+    private OrderDetailServiceImpl orderDetailService;
 
     @Test
     void shouldThrowWhenQuantityInvalid() {
         assertThrows(BadRequestException.class,
-                () -> orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(1L, 0)));
+                () -> orderDetailService.addDetail(1L, new OrderDetailRequest(null, 1L, 0)));
     }
 
     @Test
     void shouldCalculateTotal() {
-        OrderDtos.OrderDetailResponse d1 = new OrderDtos.OrderDetailResponse(1L, 1L, 1L, "A", 1, BigDecimal.TEN, BigDecimal.TEN);
-        OrderDtos.OrderDetailResponse d2 = new OrderDtos.OrderDetailResponse(2L, 1L, 2L, "B", 1, BigDecimal.ONE, BigDecimal.ONE);
+        OrderDetailResponse d1 = new OrderDetailResponse(1L, 1L, 1L, "A", 1, BigDecimal.TEN, BigDecimal.TEN);
+        OrderDetailResponse d2 = new OrderDetailResponse(2L, 1L, 2L, "B", 1, BigDecimal.ONE, BigDecimal.ONE);
         when(orderDetailRepository.findByOrderId(1L)).thenReturn(List.of(OrderDetail.builder().build(), OrderDetail.builder().build()));
         when(orderDetailMapper.toResponse(org.mockito.ArgumentMatchers.any())).thenReturn(d1, d2);
 
@@ -57,7 +58,7 @@ class OrderDetailServiceTest {
         OrderEntity order = OrderEntity.builder().id(1L).build();
         ProductDto product = new ProductDto(1L, "P", BigDecimal.TEN, "d", "c", "i");
         OrderDetail entity = OrderDetail.builder().id(7L).order(order).build();
-        OrderDtos.OrderDetailResponse response = new OrderDtos.OrderDetailResponse(7L, 1L, 1L, "P", 2, BigDecimal.TEN, new BigDecimal("20"));
+        OrderDetailResponse response = new OrderDetailResponse(7L, 1L, 1L, "P", 2, BigDecimal.TEN, new BigDecimal("20"));
 
         when(orderService.getOrderEntity(1L)).thenReturn(order);
         when(productService.getProduct(1L)).thenReturn(product);
@@ -65,8 +66,8 @@ class OrderDetailServiceTest {
         when(orderDetailRepository.save(entity)).thenReturn(entity);
         when(orderDetailMapper.toResponse(entity)).thenReturn(response);
 
-        OrderDtos.OrderDetailResponse result = orderDetailService.addDetail(1L, new OrderDtos.OrderDetailRequest(1L, 2));
+        OrderDetailResponse result = orderDetailService.addDetail(1L, new OrderDetailRequest(null, 1L, 2));
 
-        assertEquals(7L, result.id());
+        assertEquals(7L, result.getId());
     }
 }
