@@ -1,7 +1,10 @@
 package com.shoppingcart.api.dto;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class PaymentRegistrationResponse {
     private Long id;
     private Long idOrder;
@@ -13,6 +16,7 @@ public class PaymentRegistrationResponse {
     private BigDecimal amount;
     private Boolean enabled;
 
+    public PaymentRegistrationResponse(){}
     public PaymentRegistrationResponse(Long id, Long idOrder, String paymentStatus, String names, String surnames,
                                        String email, String phone, BigDecimal amount, Boolean enabled) {
         this.id = id;

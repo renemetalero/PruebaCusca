@@ -1,17 +1,17 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:shoppingdb;DB_CLOSE_DELAY=-1;MODE=MYSQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    driver-class-name: org.h2.Driver
     username: sa
     password:
-    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: false
-  sql:
-    init:
-      mode: never
 
 external:
   fakestore:
     base-url: https://fakestoreapi.com
+
+jwt:
+  secret: 1234567890123456789012345678901234567890123456789012345678901234
+  expiration-minutes: 120
