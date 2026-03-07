@@ -1,12 +1,15 @@
 package com.shoppingcart.api.service;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.OrderRegistrationRequest;
+import com.shoppingcart.api.dto.OrderRegistrationResponse;
 import com.shoppingcart.api.entity.Client;
 import com.shoppingcart.api.entity.OrderEntity;
-import com.shoppingcart.api.exception.BadRequestException;
 import com.shoppingcart.api.exception.NotFoundException;
-import com.shoppingcart.api.mapper.OrderMapper;
+import com.shoppingcart.api.repository.ClientRepository;
+import com.shoppingcart.api.repository.OrderDetailRepository;
 import com.shoppingcart.api.repository.OrderRepository;
+import com.shoppingcart.api.repository.PaymentRepository;
+import com.shoppingcart.api.serviceImpl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,38 +28,45 @@ class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
     @Mock
-    private ClientService clientService;
+    private OrderDetailRepository orderDetailRepository;
     @Mock
-    private OrderMapper orderMapper;
+    private ClientRepository clientRepository;
+    @Mock
+    private PaymentRepository paymentRepository;
 
     @InjectMocks
-    private OrderService orderService;
-
-    @Test
-    void shouldThrowWhenClientIdIsMissing() {
-        assertThrows(BadRequestException.class, () -> orderService.createOrder(new OrderDtos.CreateOrderRequest(null)));
-    }
+    private OrderServiceImpl orderService;
 
     @Test
     void shouldCreateOrder() {
-        Client client = Client.builder().id(1L).build();
+        OrderRegistrationRequest request = new OrderRegistrationRequest();
+        request.setCustomer("John");
+
+        Client client = Client.builder().id(1L).firstName("John").email("john@local").lastName("-").build();
         OrderEntity order = OrderEntity.builder().id(2L).client(client).build();
-        OrderDtos.OrderResponse response = new OrderDtos.OrderResponse(2L, 1L, null, null);
 
-        when(clientService.findById(1L)).thenReturn(client);
-        when(orderMapper.toEntity(client)).thenReturn(order);
-        when(orderRepository.save(order)).thenReturn(order);
-        when(orderMapper.toResponse(order)).thenReturn(response);
+        when(clientRepository.findByEmail("john@local")).thenReturn(Optional.of(client));
+        when(orderRepository.save(org.mockito.ArgumentMatchers.any())).thenReturn(order);
 
-        OrderDtos.OrderResponse result = orderService.createOrder(new OrderDtos.CreateOrderRequest(1L));
+        OrderRegistrationResponse result = orderService.createOrder(request);
 
-        assertEquals(2L, result.id());
+        assertEquals(2L, result.getId());
+    }
+
+    @Test
+    void shouldGetAllOrdersOnlyEnabled() {
+        Client client = Client.builder().id(1L).firstName("Rene").lastName("-").email("rene@local").build();
+        OrderEntity order = OrderEntity.builder().id(1L).client(client).enabled(true).build();
+        when(orderRepository.findAllByEnabledTrue()).thenReturn(java.util.List.of(order));
+
+        java.util.List<OrderRegistrationResponse> result = orderService.getAllOrders();
+
+        org.junit.jupiter.api.Assertions.assertEquals(1, result.size());
     }
 
     @Test
     void shouldThrowWhenOrderNotFound() {
         when(orderRepository.findById(7L)).thenReturn(Optional.empty());
-
         assertThrows(NotFoundException.class, () -> orderService.getOrderEntity(7L));
     }
 }

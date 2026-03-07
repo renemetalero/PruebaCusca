@@ -1,261 +1,181 @@
-# Shopping Cart API - Technical Documentation
+# Documentacion Tecnica - Shopping Cart API
 
-## 1. Project overview
+## 1) Resumen funcional
 
-This project is a **Java 17 + Spring Boot 3** backend for a shopping cart platform.
-It exposes REST endpoints for:
+Este proyecto implementa una API REST en **Java 17 + Spring Boot 3** para un flujo de carrito de compras con seguridad JWT, clientes, productos, ordenes y pagos.
 
-- Security (register/login with JWT)
-- Clients
-- Products (proxy to FakeStore API)
-- Orders
-- Order details
-- Payments (simulated)
+Despues de los ultimos cambios, la API soporta dos estilos de consumo:
 
-## 2. Architecture and model
+1. **Endpoints principales** (`/api/...`) para el flujo actual de registro de ordenes y pagos.
+2. **Endpoints de compatibilidad** (`/api-prueba-cuscatlan/...`) para clientes legacy.
 
-The project uses a layered architecture:
+Tambien se agrego manejo de **deshabilitacion logica** (soft delete) en ordenes y pagos con el campo `enabled`, de forma que no se borren fisicamente los datos.
 
-1. **Controller layer** (`controller`): Receives HTTP requests and returns responses.
-2. **Service layer** (`service`): Encapsulates business rules.
-3. **Repository layer** (`repository`): Data access with Spring Data JPA.
-4. **Domain model** (`entity`): JPA entities persisted in MySQL.
-5. **DTO + Mapper layers** (`dto`, `mapper`): Decouple API contracts from persistence entities.
-6. **Security layer** (`security`): JWT generation/validation, filter, and access handlers.
-7. **Exception layer** (`exception`): Centralized API error handling with a standard JSON payload.
+---
 
-### Architectural style
+## 2) Arquitectura
 
-- Monolithic backend with internal modular separation.
-- Stateless authentication via JWT bearer tokens.
-- External integration via HTTP client (`RestClient`) to FakeStore.
+La solucion mantiene una arquitectura por capas:
 
-## 3. Main libraries
+- `controller`: recibe y responde HTTP.
+- `service` (interfaces): contratos de negocio.
+- `serviceImpl`: implementaciones del negocio.
+- `repository`: acceso a datos (Spring Data JPA).
+- `entity`: modelo persistente MySQL.
+- `dto`: contratos de request/response.
+- `exception`: manejo centralizado de errores.
+- `security`: JWT y reglas de autorizacion.
 
-- `spring-boot-starter-web`: REST API support.
-- `spring-boot-starter-security`: Authentication and authorization.
-- `spring-boot-starter-data-jpa`: ORM and repository abstraction.
-- `spring-boot-starter-validation`: Bean validation.
-- `spring-boot-starter-actuator`: Observability endpoints.
-- `mysql-connector-j`: MySQL JDBC driver.
-- `springdoc-openapi-starter-webmvc-ui`: Swagger/OpenAPI docs.
-- `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: JWT creation/validation.
-- `lombok`: Boilerplate reduction.
-- `spring-boot-starter-test`, `spring-security-test`, `h2`: testing stack.
+---
 
-## 4. Security flow (JWT)
+## 3) Funcionalidad principal de la API
 
-1. User registers (`POST /api/security/register`) or logs in (`POST /api/security/login`).
-2. API returns JWT (`token`) with `Bearer` type and expiration in seconds.
-3. Client sends token in `Authorization` header for protected endpoints:
+### 3.1 Seguridad
+
+- `POST /api/security/register`
+- `POST /api/security/login`
+
+Devuelve JWT para consumir endpoints protegidos con:
 
 ```http
-Authorization: Bearer <JWT_TOKEN>
+Authorization: Bearer <TOKEN>
 ```
 
-4. `JwtAuthenticationFilter` validates token and sets security context.
-5. Unauthorized/forbidden responses are returned as custom JSON.
+### 3.2 Clientes
 
-## 5. Data model
+- `POST /api/clients`
+- `GET /api/clients`
 
-Main entities:
+### 3.3 Productos
 
-- `AppUser`: credentials and role.
-- `Client`: customer data.
-- `OrderEntity`: shopping order metadata.
-- `OrderDetail`: order lines with product and quantity.
-- `Payment`: payment result and amount.
+- `GET /api/products`
+- `GET /api/products/{id}`
 
-Persistence:
+### 3.4 Registro de ordenes (OrderRegistration)
 
-- MySQL schema scripts in:
-  - `db/mysql/01_create_schema.sql`
-  - `db/mysql/02_seed_data.sql`
+- `POST /api/orderRegistration`
+- `PUT /api/orderRegistration`
+- `DELETE /api/orderRegistration/delete/{id}` (deshabilita la orden, no la elimina)
+- `GET /api/orderRegistration/getAllOrders`
+- `GET /api/orderRegistration/getAnOrder/{id}`
 
-## 6. Endpoints documentation
+Request esperado:
 
-Base path examples assume `http://localhost:8080`.
+```json
+{
+  "id": 0,
+  "customer": "string",
+  "total": 0,
+  "orderStatus": "string",
+  "paymentMethod": "string",
+  "paymentStatus": "string",
+  "details": [
+    {
+      "id": 0,
+      "idProduct": 0,
+      "quantity": 0,
+      "price": 0
+    }
+  ]
+}
+```
+
+### 3.5 Registro de pagos (PaymentOrder)
+
+- `POST /api/paymentOrder`
+- `PUT /api/paymentOrder`
+- `DELETE /api/paymentOrder/delete/{id}` (deshabilita el pago, no lo elimina)
+- `GET /api/paymentOrder/getAllPayments`
+- `GET /api/paymentOrder/getAPayment/{id}`
+
+Request esperado:
+
+```json
+{
+  "id": 0,
+  "idOrder": 0,
+  "names": "string",
+  "surnames": "string",
+  "email": "string",
+  "phone": "string",
+  "number_card": "string"
+}
+```
 
 ---
 
-### 6.1 Security
+## 4) Reglas de negocio vigentes
 
-#### `POST /api/security/register`
-Registers a new user and returns JWT.
+1. **Soft delete**:
+   - Ordenes y pagos se deshabilitan (`enabled = false`) en lugar de eliminarse.
+2. **Listados filtrados por habilitados**:
+   - Solo se muestran transacciones con `enabled = true`.
+3. **Pago aprobado**:
+   - Si el numero de tarjeta cumple la validacion interna, el pago pasa a `APPROVED`.
+4. **Trazabilidad**:
+   - Se agrego logging con SLF4J en controllers, servicios y excepciones.
 
-Request body:
+---
+
+## 5) Endpoints de compatibilidad
+
+Base: `/api-prueba-cuscatlan`
+
+Incluye rutas equivalentes para autenticacion, productos, ordenes y pagos para integraciones legacy.
+
+---
+
+## 6) Base de datos
+
+Scripts MySQL:
+
+- `db/mysql/01_create_schema.sql`
+- `db/mysql/02_seed_data.sql`
+
+Cambios importantes de esquema:
+
+- `orders.enabled`
+- `payments.enabled`
+- campos de pagador en `payments` (`payer_names`, `payer_surnames`, `payer_email`, `payer_phone`)
+
+---
+
+## 7) Manejo de errores
+
+La API responde errores en formato estandar:
 
 ```json
 {
-  "username": "john",
-  "password": "12345678"
-}
-```
-
-Response:
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiJ9...",
-  "tokenType": "Bearer",
-  "expiresInSeconds": 7200
-}
-```
-
-#### `POST /api/security/login`
-Authenticates an existing user and returns JWT.
-
-Request body:
-
-```json
-{
-  "username": "john",
-  "password": "12345678"
+  "timestamp": "2026-03-07T14:47:37",
+  "status": 500,
+  "error": "Internal Server Error",
+  "message": "Unexpected internal error",
+  "path": "/api/orderRegistration/getAllOrders"
 }
 ```
 
 ---
 
-### 6.2 Clients
+## 8) Pruebas y cobertura
 
-#### `POST /api/clients`
-Creates a client.
+Se incluye en este PDF una seccion de referencia de cobertura/pruebas basada en la captura compartida del reporte JaCoCo.
 
-Headers:
+Resumen visual reportado:
 
-- `Authorization: Bearer <token>`
-
-Request body:
-
-```json
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john@doe.com"
-}
-```
-
-#### `GET /api/clients`
-Returns all clients.
-
-Headers:
-
-- `Authorization: Bearer <token>`
+- Cobertura de instrucciones total: **82%**
+- Cobertura de ramas total: **58%**
+- Lineas cubiertas: **670**
 
 ---
 
-### 6.3 Products
-
-#### `GET /api/products`
-Returns all products by proxying FakeStore API.
-
-#### `GET /api/products/{id}`
-Returns a single product by ID through the external proxy.
-
----
-
-### 6.4 Orders
-
-#### `POST /api/orders`
-Creates an order for a client.
-
-Request body:
-
-```json
-{
-  "clientId": 1
-}
-```
-
-#### `GET /api/orders/{id}`
-Returns order header + detail lines.
-
----
-
-### 6.5 Order details
-
-#### `POST /api/details/order/{orderId}`
-Adds an item into an order.
-
-Request body:
-
-```json
-{
-  "productId": 1,
-  "quantity": 2
-}
-```
-
-#### `GET /api/details/order/{orderId}`
-Returns all lines of one order.
-
----
-
-### 6.6 Payments
-
-#### `POST /api/payments`
-Simulates payment process for an order.
-
-Request body:
-
-```json
-{
-  "orderId": 1,
-  "cardNumber": "1234567890",
-  "cardHolder": "John Doe"
-}
-```
-
-Behavior:
-
-- Approved if card number length >= 8.
-- Order status changes to `PAID` when approved.
-
-## 7. Error handling
-
-The API returns a standardized error JSON with:
-
-- `timestamp`
-- `status`
-- `error`
-- `message`
-- `details` (optional)
-- `path`
-
-Example:
-
-```json
-{
-  "timestamp": "2026-03-06T10:22:00",
-  "status": 401,
-  "error": "Unauthorized",
-  "message": "Authentication is required to access this resource",
-  "path": "/api/clients"
-}
-```
-
-## 8. How to run
-
-1. Create MySQL schema with provided scripts.
-2. Configure DB credentials in `src/main/resources/application.yml`.
-3. Start application:
+## 9) Ejecucion
 
 ```bash
 mvn spring-boot:run
 ```
 
-4. Open Swagger UI:
-
-- `http://localhost:8080/swagger-ui.html`
-
-## 9. Testing
-
-Run tests:
+Pruebas:
 
 ```bash
 mvn test
 ```
-
-Test profile uses H2 in-memory database from:
-
-- `src/test/resources/application.yml`

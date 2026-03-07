@@ -4,341 +4,99 @@
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<< /Type /Pages /Count 6 /Kids [ 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R ] >>
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
 endobj
 3 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
 endobj
 4 0 obj
-<< /Length 3669 >>
-stream
-BT /F1 10 Tf 50 760 Td (# Shopping Cart API - Technical Documentation) Tj ET
-BT /F1 10 Tf 50 746 Td () Tj ET
-BT /F1 10 Tf 50 732 Td (## 1. Project overview) Tj ET
-BT /F1 10 Tf 50 718 Td () Tj ET
-BT /F1 10 Tf 50 704 Td (This project is a **Java 17 + Spring Boot 3** backend for a shopping cart platform.) Tj ET
-BT /F1 10 Tf 50 690 Td (It exposes REST endpoints for:) Tj ET
-BT /F1 10 Tf 50 676 Td () Tj ET
-BT /F1 10 Tf 50 662 Td (- Security \(register/login with JWT\)) Tj ET
-BT /F1 10 Tf 50 648 Td (- Clients) Tj ET
-BT /F1 10 Tf 50 634 Td (- Products \(proxy to FakeStore API\)) Tj ET
-BT /F1 10 Tf 50 620 Td (- Orders) Tj ET
-BT /F1 10 Tf 50 606 Td (- Order details) Tj ET
-BT /F1 10 Tf 50 592 Td (- Payments \(simulated\)) Tj ET
-BT /F1 10 Tf 50 578 Td () Tj ET
-BT /F1 10 Tf 50 564 Td (## 2. Architecture and model) Tj ET
-BT /F1 10 Tf 50 550 Td () Tj ET
-BT /F1 10 Tf 50 536 Td (The project uses a layered architecture:) Tj ET
-BT /F1 10 Tf 50 522 Td () Tj ET
-BT /F1 10 Tf 50 508 Td (1. **Controller layer** \(`controller`\): Receives HTTP requests and returns responses.) Tj ET
-BT /F1 10 Tf 50 494 Td (2. **Service layer** \(`service`\): Encapsulates business rules.) Tj ET
-BT /F1 10 Tf 50 480 Td (3. **Repository layer** \(`repository`\): Data access with Spring Data JPA.) Tj ET
-BT /F1 10 Tf 50 466 Td (4. **Domain model** \(`entity`\): JPA entities persisted in MySQL.) Tj ET
-BT /F1 10 Tf 50 452 Td (5. **DTO + Mapper layers** \(`dto`, `mapper`\): Decouple API contracts from persistence entities.) Tj ET
-BT /F1 10 Tf 50 438 Td (6. **Security layer** \(`security`\): JWT generation/validation, filter, and access handlers.) Tj ET
-BT /F1 10 Tf 50 424 Td (7. **Exception layer** \(`exception`\): Centralized API error handling with a standard JSON) Tj ET
-BT /F1 10 Tf 50 410 Td (payload.) Tj ET
-BT /F1 10 Tf 50 396 Td () Tj ET
-BT /F1 10 Tf 50 382 Td (### Architectural style) Tj ET
-BT /F1 10 Tf 50 368 Td () Tj ET
-BT /F1 10 Tf 50 354 Td (- Monolithic backend with internal modular separation.) Tj ET
-BT /F1 10 Tf 50 340 Td (- Stateless authentication via JWT bearer tokens.) Tj ET
-BT /F1 10 Tf 50 326 Td (- External integration via HTTP client \(`RestClient`\) to FakeStore.) Tj ET
-BT /F1 10 Tf 50 312 Td () Tj ET
-BT /F1 10 Tf 50 298 Td (## 3. Main libraries) Tj ET
-BT /F1 10 Tf 50 284 Td () Tj ET
-BT /F1 10 Tf 50 270 Td (- `spring-boot-starter-web`: REST API support.) Tj ET
-BT /F1 10 Tf 50 256 Td (- `spring-boot-starter-security`: Authentication and authorization.) Tj ET
-BT /F1 10 Tf 50 242 Td (- `spring-boot-starter-data-jpa`: ORM and repository abstraction.) Tj ET
-BT /F1 10 Tf 50 228 Td (- `spring-boot-starter-validation`: Bean validation.) Tj ET
-BT /F1 10 Tf 50 214 Td (- `spring-boot-starter-actuator`: Observability endpoints.) Tj ET
-BT /F1 10 Tf 50 200 Td (- `mysql-connector-j`: MySQL JDBC driver.) Tj ET
-BT /F1 10 Tf 50 186 Td (- `springdoc-openapi-starter-webmvc-ui`: Swagger/OpenAPI docs.) Tj ET
-BT /F1 10 Tf 50 172 Td (- `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: JWT creation/validation.) Tj ET
-BT /F1 10 Tf 50 158 Td (- `lombok`: Boilerplate reduction.) Tj ET
-BT /F1 10 Tf 50 144 Td (- `spring-boot-starter-test`, `spring-security-test`, `h2`: testing stack.) Tj ET
-BT /F1 10 Tf 50 130 Td () Tj ET
-BT /F1 10 Tf 50 116 Td (## 4. Security flow \(JWT\)) Tj ET
-BT /F1 10 Tf 50 102 Td () Tj ET
-BT /F1 10 Tf 50 88 Td (1. User registers \(`POST /api/security/register`\) or logs in \(`POST /api/security/login`\).) Tj ET
-BT /F1 10 Tf 50 74 Td (2. API returns JWT \(`token`\) with `Bearer` type and expiration in seconds.) Tj ET
-BT /F1 10 Tf 50 60 Td (3. Client sends token in `Authorization` header for protected endpoints:) Tj ET
-BT /F1 10 Tf 50 46 Td () Tj ET
-endstream
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 4 0 R >>
-endobj
-6 0 obj
-<< /Length 2513 >>
+<< /Length 1671 >>
 stream
-BT /F1 10 Tf 50 760 Td (```http) Tj ET
-BT /F1 10 Tf 50 746 Td (Authorization: Bearer <JWT_TOKEN>) Tj ET
-BT /F1 10 Tf 50 732 Td (```) Tj ET
-BT /F1 10 Tf 50 718 Td () Tj ET
-BT /F1 10 Tf 50 704 Td (4. `JwtAuthenticationFilter` validates token and sets security context.) Tj ET
-BT /F1 10 Tf 50 690 Td (5. Unauthorized/forbidden responses are returned as custom JSON.) Tj ET
-BT /F1 10 Tf 50 676 Td () Tj ET
-BT /F1 10 Tf 50 662 Td (## 5. Data model) Tj ET
-BT /F1 10 Tf 50 648 Td () Tj ET
-BT /F1 10 Tf 50 634 Td (Main entities:) Tj ET
-BT /F1 10 Tf 50 620 Td () Tj ET
-BT /F1 10 Tf 50 606 Td (- `AppUser`: credentials and role.) Tj ET
-BT /F1 10 Tf 50 592 Td (- `Client`: customer data.) Tj ET
-BT /F1 10 Tf 50 578 Td (- `OrderEntity`: shopping order metadata.) Tj ET
-BT /F1 10 Tf 50 564 Td (- `OrderDetail`: order lines with product and quantity.) Tj ET
-BT /F1 10 Tf 50 550 Td (- `Payment`: payment result and amount.) Tj ET
-BT /F1 10 Tf 50 536 Td () Tj ET
-BT /F1 10 Tf 50 522 Td (Persistence:) Tj ET
-BT /F1 10 Tf 50 508 Td () Tj ET
-BT /F1 10 Tf 50 494 Td (- MySQL schema scripts in:) Tj ET
-BT /F1 10 Tf 50 480 Td (  - `db/mysql/01_create_schema.sql`) Tj ET
-BT /F1 10 Tf 50 466 Td (  - `db/mysql/02_seed_data.sql`) Tj ET
-BT /F1 10 Tf 50 452 Td () Tj ET
-BT /F1 10 Tf 50 438 Td (## 6. Endpoints documentation) Tj ET
-BT /F1 10 Tf 50 424 Td () Tj ET
-BT /F1 10 Tf 50 410 Td (Base path examples assume `http://localhost:8080`.) Tj ET
-BT /F1 10 Tf 50 396 Td () Tj ET
-BT /F1 10 Tf 50 382 Td (---) Tj ET
-BT /F1 10 Tf 50 368 Td () Tj ET
-BT /F1 10 Tf 50 354 Td (### 6.1 Security) Tj ET
-BT /F1 10 Tf 50 340 Td () Tj ET
-BT /F1 10 Tf 50 326 Td (#### `POST /api/security/register`) Tj ET
-BT /F1 10 Tf 50 312 Td (Registers a new user and returns JWT.) Tj ET
-BT /F1 10 Tf 50 298 Td () Tj ET
-BT /F1 10 Tf 50 284 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 270 Td () Tj ET
-BT /F1 10 Tf 50 256 Td (```json) Tj ET
-BT /F1 10 Tf 50 242 Td ({) Tj ET
-BT /F1 10 Tf 50 228 Td (  "username": "john",) Tj ET
-BT /F1 10 Tf 50 214 Td (  "password": "12345678") Tj ET
-BT /F1 10 Tf 50 200 Td (}) Tj ET
-BT /F1 10 Tf 50 186 Td (```) Tj ET
-BT /F1 10 Tf 50 172 Td () Tj ET
-BT /F1 10 Tf 50 158 Td (Response:) Tj ET
-BT /F1 10 Tf 50 144 Td () Tj ET
-BT /F1 10 Tf 50 130 Td (```json) Tj ET
-BT /F1 10 Tf 50 116 Td ({) Tj ET
-BT /F1 10 Tf 50 102 Td (  "token": "eyJhbGciOiJIUzI1NiJ9...",) Tj ET
-BT /F1 10 Tf 50 88 Td (  "tokenType": "Bearer",) Tj ET
-BT /F1 10 Tf 50 74 Td (  "expiresInSeconds": 7200) Tj ET
-BT /F1 10 Tf 50 60 Td (}) Tj ET
-BT /F1 10 Tf 50 46 Td (```) Tj ET
+BT
+/F1 12 Tf
+50 800 Td
+14 TL
+(Documentacion Tecnica - Shopping Cart API) Tj
+T*
+() Tj
+T*
+(1\) Funcionalidad del API \(version actual\)) Tj
+T*
+(- Seguridad JWT: /api/security/register, /api/security/login) Tj
+T*
+(- Clientes: /api/clients) Tj
+T*
+(- Productos: /api/products) Tj
+T*
+(- OrderRegistration: /api/orderRegistration \(POST, PUT, DELETE, GET\)) Tj
+T*
+(- PaymentOrder: /api/paymentOrder \(POST, PUT, DELETE, GET\)) Tj
+T*
+(- Compatibilidad legacy: /api-prueba-cuscatlan/*) Tj
+T*
+() Tj
+T*
+(2\) Cambios clave incluidos) Tj
+T*
+(- Soft delete con campo enabled en orders y payments) Tj
+T*
+(- Listados de ordenes/pagos filtrados por enabled = true) Tj
+T*
+(- Servicios separados por interfaces y serviceImpl) Tj
+T*
+(- Trazabilidad con logs SLF4J en controladores y servicios) Tj
+T*
+() Tj
+T*
+(3\) Cobertura y pruebas \(referencia de la captura JaCoCo enviada\)) Tj
+T*
+(---------------------------------------------------------------) Tj
+T*
+( Paquete/Total                         Cobertura) Tj
+T*
+( Instrucciones totales                 82%) Tj
+T*
+( Ramas totales                         58%) Tj
+T*
+( Lineas cubiertas                      670) Tj
+T*
+(---------------------------------------------------------------) Tj
+T*
+( Nota: esta seccion resume la imagen de cobertura compartida) Tj
+T*
+( por el usuario para dejar evidencia dentro del PDF actualizado.) Tj
+T*
+() Tj
+T*
+(4\) Endpoints principales y contratos) Tj
+T*
+(OrderRegistration request:) Tj
+T*
+({ id, customer, total, orderStatus, paymentMethod, paymentStatus, details[] }) Tj
+T*
+(PaymentOrder request:) Tj
+T*
+({ id, idOrder, names, surnames, email, phone, number_card }) Tj
+T*
+() Tj
+T*
+(Fin del documento.) Tj
+ET
 endstream
-endobj
-7 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 6 0 R >>
-endobj
-8 0 obj
-<< /Length 2263 >>
-stream
-BT /F1 10 Tf 50 760 Td () Tj ET
-BT /F1 10 Tf 50 746 Td (#### `POST /api/security/login`) Tj ET
-BT /F1 10 Tf 50 732 Td (Authenticates an existing user and returns JWT.) Tj ET
-BT /F1 10 Tf 50 718 Td () Tj ET
-BT /F1 10 Tf 50 704 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 690 Td () Tj ET
-BT /F1 10 Tf 50 676 Td (```json) Tj ET
-BT /F1 10 Tf 50 662 Td ({) Tj ET
-BT /F1 10 Tf 50 648 Td (  "username": "john",) Tj ET
-BT /F1 10 Tf 50 634 Td (  "password": "12345678") Tj ET
-BT /F1 10 Tf 50 620 Td (}) Tj ET
-BT /F1 10 Tf 50 606 Td (```) Tj ET
-BT /F1 10 Tf 50 592 Td () Tj ET
-BT /F1 10 Tf 50 578 Td (---) Tj ET
-BT /F1 10 Tf 50 564 Td () Tj ET
-BT /F1 10 Tf 50 550 Td (### 6.2 Clients) Tj ET
-BT /F1 10 Tf 50 536 Td () Tj ET
-BT /F1 10 Tf 50 522 Td (#### `POST /api/clients`) Tj ET
-BT /F1 10 Tf 50 508 Td (Creates a client.) Tj ET
-BT /F1 10 Tf 50 494 Td () Tj ET
-BT /F1 10 Tf 50 480 Td (Headers:) Tj ET
-BT /F1 10 Tf 50 466 Td () Tj ET
-BT /F1 10 Tf 50 452 Td (- `Authorization: Bearer <token>`) Tj ET
-BT /F1 10 Tf 50 438 Td () Tj ET
-BT /F1 10 Tf 50 424 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 410 Td () Tj ET
-BT /F1 10 Tf 50 396 Td (```json) Tj ET
-BT /F1 10 Tf 50 382 Td ({) Tj ET
-BT /F1 10 Tf 50 368 Td (  "firstName": "John",) Tj ET
-BT /F1 10 Tf 50 354 Td (  "lastName": "Doe",) Tj ET
-BT /F1 10 Tf 50 340 Td (  "email": "john@doe.com") Tj ET
-BT /F1 10 Tf 50 326 Td (}) Tj ET
-BT /F1 10 Tf 50 312 Td (```) Tj ET
-BT /F1 10 Tf 50 298 Td () Tj ET
-BT /F1 10 Tf 50 284 Td (#### `GET /api/clients`) Tj ET
-BT /F1 10 Tf 50 270 Td (Returns all clients.) Tj ET
-BT /F1 10 Tf 50 256 Td () Tj ET
-BT /F1 10 Tf 50 242 Td (Headers:) Tj ET
-BT /F1 10 Tf 50 228 Td () Tj ET
-BT /F1 10 Tf 50 214 Td (- `Authorization: Bearer <token>`) Tj ET
-BT /F1 10 Tf 50 200 Td () Tj ET
-BT /F1 10 Tf 50 186 Td (---) Tj ET
-BT /F1 10 Tf 50 172 Td () Tj ET
-BT /F1 10 Tf 50 158 Td (### 6.3 Products) Tj ET
-BT /F1 10 Tf 50 144 Td () Tj ET
-BT /F1 10 Tf 50 130 Td (#### `GET /api/products`) Tj ET
-BT /F1 10 Tf 50 116 Td (Returns all products by proxying FakeStore API.) Tj ET
-BT /F1 10 Tf 50 102 Td () Tj ET
-BT /F1 10 Tf 50 88 Td (#### `GET /api/products/{id}`) Tj ET
-BT /F1 10 Tf 50 74 Td (Returns a single product by ID through the external proxy.) Tj ET
-BT /F1 10 Tf 50 60 Td () Tj ET
-BT /F1 10 Tf 50 46 Td (---) Tj ET
-endstream
-endobj
-9 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 8 0 R >>
-endobj
-10 0 obj
-<< /Length 2225 >>
-stream
-BT /F1 10 Tf 50 760 Td () Tj ET
-BT /F1 10 Tf 50 746 Td (### 6.4 Orders) Tj ET
-BT /F1 10 Tf 50 732 Td () Tj ET
-BT /F1 10 Tf 50 718 Td (#### `POST /api/orders`) Tj ET
-BT /F1 10 Tf 50 704 Td (Creates an order for a client.) Tj ET
-BT /F1 10 Tf 50 690 Td () Tj ET
-BT /F1 10 Tf 50 676 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 662 Td () Tj ET
-BT /F1 10 Tf 50 648 Td (```json) Tj ET
-BT /F1 10 Tf 50 634 Td ({) Tj ET
-BT /F1 10 Tf 50 620 Td (  "clientId": 1) Tj ET
-BT /F1 10 Tf 50 606 Td (}) Tj ET
-BT /F1 10 Tf 50 592 Td (```) Tj ET
-BT /F1 10 Tf 50 578 Td () Tj ET
-BT /F1 10 Tf 50 564 Td (#### `GET /api/orders/{id}`) Tj ET
-BT /F1 10 Tf 50 550 Td (Returns order header + detail lines.) Tj ET
-BT /F1 10 Tf 50 536 Td () Tj ET
-BT /F1 10 Tf 50 522 Td (---) Tj ET
-BT /F1 10 Tf 50 508 Td () Tj ET
-BT /F1 10 Tf 50 494 Td (### 6.5 Order details) Tj ET
-BT /F1 10 Tf 50 480 Td () Tj ET
-BT /F1 10 Tf 50 466 Td (#### `POST /api/details/order/{orderId}`) Tj ET
-BT /F1 10 Tf 50 452 Td (Adds an item into an order.) Tj ET
-BT /F1 10 Tf 50 438 Td () Tj ET
-BT /F1 10 Tf 50 424 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 410 Td () Tj ET
-BT /F1 10 Tf 50 396 Td (```json) Tj ET
-BT /F1 10 Tf 50 382 Td ({) Tj ET
-BT /F1 10 Tf 50 368 Td (  "productId": 1,) Tj ET
-BT /F1 10 Tf 50 354 Td (  "quantity": 2) Tj ET
-BT /F1 10 Tf 50 340 Td (}) Tj ET
-BT /F1 10 Tf 50 326 Td (```) Tj ET
-BT /F1 10 Tf 50 312 Td () Tj ET
-BT /F1 10 Tf 50 298 Td (#### `GET /api/details/order/{orderId}`) Tj ET
-BT /F1 10 Tf 50 284 Td (Returns all lines of one order.) Tj ET
-BT /F1 10 Tf 50 270 Td () Tj ET
-BT /F1 10 Tf 50 256 Td (---) Tj ET
-BT /F1 10 Tf 50 242 Td () Tj ET
-BT /F1 10 Tf 50 228 Td (### 6.6 Payments) Tj ET
-BT /F1 10 Tf 50 214 Td () Tj ET
-BT /F1 10 Tf 50 200 Td (#### `POST /api/payments`) Tj ET
-BT /F1 10 Tf 50 186 Td (Simulates payment process for an order.) Tj ET
-BT /F1 10 Tf 50 172 Td () Tj ET
-BT /F1 10 Tf 50 158 Td (Request body:) Tj ET
-BT /F1 10 Tf 50 144 Td () Tj ET
-BT /F1 10 Tf 50 130 Td (```json) Tj ET
-BT /F1 10 Tf 50 116 Td ({) Tj ET
-BT /F1 10 Tf 50 102 Td (  "orderId": 1,) Tj ET
-BT /F1 10 Tf 50 88 Td (  "cardNumber": "1234567890",) Tj ET
-BT /F1 10 Tf 50 74 Td (  "cardHolder": "John Doe") Tj ET
-BT /F1 10 Tf 50 60 Td (}) Tj ET
-BT /F1 10 Tf 50 46 Td (```) Tj ET
-endstream
-endobj
-11 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 10 0 R >>
-endobj
-12 0 obj
-<< /Length 2409 >>
-stream
-BT /F1 10 Tf 50 760 Td () Tj ET
-BT /F1 10 Tf 50 746 Td (Behavior:) Tj ET
-BT /F1 10 Tf 50 732 Td () Tj ET
-BT /F1 10 Tf 50 718 Td (- Approved if card number length >= 8.) Tj ET
-BT /F1 10 Tf 50 704 Td (- Order status changes to `PAID` when approved.) Tj ET
-BT /F1 10 Tf 50 690 Td () Tj ET
-BT /F1 10 Tf 50 676 Td (## 7. Error handling) Tj ET
-BT /F1 10 Tf 50 662 Td () Tj ET
-BT /F1 10 Tf 50 648 Td (The API returns a standardized error JSON with:) Tj ET
-BT /F1 10 Tf 50 634 Td () Tj ET
-BT /F1 10 Tf 50 620 Td (- `timestamp`) Tj ET
-BT /F1 10 Tf 50 606 Td (- `status`) Tj ET
-BT /F1 10 Tf 50 592 Td (- `error`) Tj ET
-BT /F1 10 Tf 50 578 Td (- `message`) Tj ET
-BT /F1 10 Tf 50 564 Td (- `details` \(optional\)) Tj ET
-BT /F1 10 Tf 50 550 Td (- `path`) Tj ET
-BT /F1 10 Tf 50 536 Td () Tj ET
-BT /F1 10 Tf 50 522 Td (Example:) Tj ET
-BT /F1 10 Tf 50 508 Td () Tj ET
-BT /F1 10 Tf 50 494 Td (```json) Tj ET
-BT /F1 10 Tf 50 480 Td ({) Tj ET
-BT /F1 10 Tf 50 466 Td (  "timestamp": "2026-03-06T10:22:00",) Tj ET
-BT /F1 10 Tf 50 452 Td (  "status": 401,) Tj ET
-BT /F1 10 Tf 50 438 Td (  "error": "Unauthorized",) Tj ET
-BT /F1 10 Tf 50 424 Td (  "message": "Authentication is required to access this resource",) Tj ET
-BT /F1 10 Tf 50 410 Td (  "path": "/api/clients") Tj ET
-BT /F1 10 Tf 50 396 Td (}) Tj ET
-BT /F1 10 Tf 50 382 Td (```) Tj ET
-BT /F1 10 Tf 50 368 Td () Tj ET
-BT /F1 10 Tf 50 354 Td (## 8. How to run) Tj ET
-BT /F1 10 Tf 50 340 Td () Tj ET
-BT /F1 10 Tf 50 326 Td (1. Create MySQL schema with provided scripts.) Tj ET
-BT /F1 10 Tf 50 312 Td (2. Configure DB credentials in `src/main/resources/application.yml`.) Tj ET
-BT /F1 10 Tf 50 298 Td (3. Start application:) Tj ET
-BT /F1 10 Tf 50 284 Td () Tj ET
-BT /F1 10 Tf 50 270 Td (```bash) Tj ET
-BT /F1 10 Tf 50 256 Td (mvn spring-boot:run) Tj ET
-BT /F1 10 Tf 50 242 Td (```) Tj ET
-BT /F1 10 Tf 50 228 Td () Tj ET
-BT /F1 10 Tf 50 214 Td (4. Open Swagger UI:) Tj ET
-BT /F1 10 Tf 50 200 Td () Tj ET
-BT /F1 10 Tf 50 186 Td (- `http://localhost:8080/swagger-ui.html`) Tj ET
-BT /F1 10 Tf 50 172 Td () Tj ET
-BT /F1 10 Tf 50 158 Td (## 9. Testing) Tj ET
-BT /F1 10 Tf 50 144 Td () Tj ET
-BT /F1 10 Tf 50 130 Td (Run tests:) Tj ET
-BT /F1 10 Tf 50 116 Td () Tj ET
-BT /F1 10 Tf 50 102 Td (```bash) Tj ET
-BT /F1 10 Tf 50 88 Td (mvn test) Tj ET
-BT /F1 10 Tf 50 74 Td (```) Tj ET
-BT /F1 10 Tf 50 60 Td () Tj ET
-BT /F1 10 Tf 50 46 Td (Test profile uses H2 in-memory database from:) Tj ET
-endstream
-endobj
-13 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 12 0 R >>
-endobj
-14 0 obj
-<< /Length 101 >>
-stream
-BT /F1 10 Tf 50 760 Td () Tj ET
-BT /F1 10 Tf 50 746 Td (- `src/test/resources/application.yml`) Tj ET
-endstream
-endobj
-15 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents 14 0 R >>
 endobj
 xref
-0 16
+0 6
 0000000000 65535 f 
 0000000015 00000 n 
 0000000064 00000 n 
-0000000156 00000 n 
-0000000226 00000 n 
-0000003947 00000 n 
-0000004073 00000 n 
-0000006638 00000 n 
-0000006764 00000 n 
-0000009079 00000 n 
-0000009205 00000 n 
-0000011483 00000 n 
-0000011611 00000 n 
-0000014073 00000 n 
-0000014201 00000 n 
-0000014354 00000 n 
+0000000121 00000 n 
+0000000247 00000 n 
+0000000317 00000 n 
 trailer
-<< /Size 16 /Root 1 0 R >>
+<< /Size 6 /Root 1 0 R >>
 startxref
-14482
+2039
 %%EOF
