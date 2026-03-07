@@ -1,6 +1,6 @@
 package com.shoppingcart.api.mapper;
 
-import com.shoppingcart.api.dto.OrderDtos;
+import com.shoppingcart.api.dto.*;
 import com.shoppingcart.api.entity.Client;
 import com.shoppingcart.api.entity.OrderEntity;
 import com.shoppingcart.api.entity.OrderStatus;
@@ -20,11 +20,11 @@ public class OrderMapper {
                 .build();
     }
 
-    public OrderDtos.OrderResponse toResponse(OrderEntity order) {
-        return new OrderDtos.OrderResponse(order.getId(), order.getClient().getId(), order.getStatus(), order.getCreatedAt());
+    public OrderResponse toResponse(OrderEntity order) {
+        return new OrderResponse(order.getId(), order.getClient().getId(), order.getStatus(), order.getCreatedAt());
     }
 
-    public OrderDtos.FullOrderResponse toFullResponse(OrderEntity order, List<OrderDtos.OrderDetailResponse> details) {
-        return new OrderDtos.FullOrderResponse(toResponse(order), details);
+    public FullOrderResponse toFullResponse(OrderEntity order, List<OrderDetailResponse> details) {
+        return new FullOrderResponse(toResponse(order), details);
     }
 }
