@@ -52,6 +52,15 @@ class OrderControllerTest {
     }
 
     @Test
+    void shouldGetAllOrders() throws Exception {
+        when(orderService.getAllOrders()).thenReturn(List.of(new OrderRegistrationResponse(1L, "Rene", BigDecimal.TEN, "CREATED", null, null, true, List.of())));
+
+        mockMvc.perform(get("/api/orderRegistration/getAllOrders"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1));
+    }
+
+    @Test
     void shouldGetOrder() throws Exception {
         when(orderService.getOrder(1L)).thenReturn(new OrderRegistrationResponse(1L, "John", BigDecimal.TEN, "CREATED", null, null, true, List.of()));
 

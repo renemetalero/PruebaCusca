@@ -12,7 +12,9 @@ import com.shoppingcart.api.repository.OrderRepository;
 import com.shoppingcart.api.repository.PaymentRepository;
 import com.shoppingcart.api.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
@@ -29,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderRegistrationResponse createOrder(OrderRegistrationRequest request) {
+        log.info("[OrderService] createOrder customer={} status={}", request.getCustomer(), request.getOrderStatus());
         Client client = getOrCreateCustomer(request.getCustomer());
 
         OrderEntity order = OrderEntity.builder()
@@ -46,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderRegistrationResponse updateOrder(OrderRegistrationRequest request) {
+        log.info("[OrderService] updateOrder id={}", request.getId());
         if (request.getId() == null) {
             throw new BadRequestException("id is required");
         }
@@ -70,6 +75,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void disableOrder(Long id) {
+        log.info("[OrderService] disableOrder id={}", id);
         OrderEntity order = getOrderEntity(id);
         order.setEnabled(false);
         order.setStatus(OrderStatus.DISABLED);
@@ -77,12 +83,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<OrderRegistrationResponse> getAllOrders() {
+        log.info("[OrderService] getAllOrders");
         return orderRepository.findAll().stream().map(o -> toResponse(o, null, null)).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public OrderRegistrationResponse getOrder(Long id) {
+        log.info("[OrderService] getOrder id={}", id);
         return toResponse(getOrderEntity(id), null, null);
     }
 

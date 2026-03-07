@@ -54,6 +54,17 @@ class OrderServiceTest {
     }
 
     @Test
+    void shouldGetAllOrders() {
+        Client client = Client.builder().id(1L).firstName("Rene").lastName("-").email("rene@local").build();
+        OrderEntity order = OrderEntity.builder().id(1L).client(client).enabled(true).build();
+        when(orderRepository.findAll()).thenReturn(java.util.List.of(order));
+
+        java.util.List<OrderRegistrationResponse> result = orderService.getAllOrders();
+
+        org.junit.jupiter.api.Assertions.assertEquals(1, result.size());
+    }
+
+    @Test
     void shouldThrowWhenOrderNotFound() {
         when(orderRepository.findById(7L)).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> orderService.getOrderEntity(7L));

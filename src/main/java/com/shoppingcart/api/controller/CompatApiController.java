@@ -14,6 +14,7 @@ import com.shoppingcart.api.service.AuthService;
 import com.shoppingcart.api.service.PaymentService;
 import com.shoppingcart.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api-prueba-cuscatlan")
 @RequiredArgsConstructor
+@Slf4j
 public class CompatApiController {
 
     private final AuthService authService;
@@ -125,6 +127,7 @@ public class CompatApiController {
     @GetMapping("/orderRegistration/getAllOrders")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<List<CompatDtos.OrderResponseCompat>> getAllOrders() {
+        log.info("[CompatApiController] getAllOrders");
         List<CompatDtos.OrderResponseCompat> response = orderRepository.findAll().stream()
                 .map(order -> toCompatOrder(order, null, null))
                 .toList();

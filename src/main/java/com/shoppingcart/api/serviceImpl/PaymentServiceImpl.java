@@ -13,6 +13,7 @@ import com.shoppingcart.api.service.OrderDetailService;
 import com.shoppingcart.api.service.OrderService;
 import com.shoppingcart.api.service.PaymentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
     private final OrderService orderService;
@@ -29,6 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentRegistrationResponse createPayment(PaymentRegistrationRequest request) {
+        log.info("[PaymentService] createPayment orderId={} names={}", request.getIdOrder(), request.getNames());
         if (request.getIdOrder() == null) {
             throw new BadRequestException("idOrder is required");
         }
@@ -63,6 +66,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentRegistrationResponse updatePayment(PaymentRegistrationRequest request) {
+        log.info("[PaymentService] updatePayment id={} orderId={}", request.getId(), request.getIdOrder());
         if (request.getId() == null) {
             throw new BadRequestException("id is required");
         }
@@ -83,6 +87,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void disablePayment(Long id) {
+        log.info("[PaymentService] disablePayment id={}", id);
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Payment not found"));
         payment.setEnabled(false);
@@ -92,11 +97,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentRegistrationResponse> getAllPayments() {
+        log.info("[PaymentService] getAllPayments");
         return paymentRepository.findAll().stream().map(this::toResponse).toList();
     }
 
     @Override
     public PaymentRegistrationResponse getPayment(Long id) {
+        log.info("[PaymentService] getPayment id={}", id);
         Payment payment = paymentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Payment not found"));
         return toResponse(payment);

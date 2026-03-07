@@ -12,6 +12,7 @@ import com.shoppingcart.api.service.OrderDetailService;
 import com.shoppingcart.api.service.OrderService;
 import com.shoppingcart.api.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderDetailServiceImpl implements OrderDetailService {
 
     private final OrderDetailRepository orderDetailRepository;
@@ -28,6 +30,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public OrderDetailResponse addDetail(Long orderId, OrderDetailRequest request) {
+        log.info("[OrderDetailService] addDetail orderId={} productId={} quantity={}", orderId, request.getProductId(), request.getQuantity());
         if (request.getQuantity() == null || request.getQuantity() <= 0) {
             throw new BadRequestException("Quantity must be greater than zero");
         }
@@ -43,11 +46,13 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public List<OrderDetailResponse> getDetailsByOrder(Long orderId) {
+        log.info("[OrderDetailService] getDetailsByOrder orderId={}", orderId);
         return orderDetailRepository.findByOrderId(orderId).stream().map(orderDetailMapper::toResponse).toList();
     }
 
     @Override
     public BigDecimal calculateOrderTotal(Long orderId) {
+        log.info("[OrderDetailService] calculateOrderTotal orderId={}", orderId);
         return getDetailsByOrder(orderId).stream()
                 .map(OrderDetailResponse::getLineTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
