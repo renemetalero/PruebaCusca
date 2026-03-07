@@ -98,7 +98,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<PaymentRegistrationResponse> getAllPayments() {
         log.info("[PaymentService] getAllPayments");
-        return paymentRepository.findAll().stream().map(this::toResponse).toList();
+        return paymentRepository.findAllByStatusOrderByProcessedAtDesc(PaymentStatus.APPROVED).stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @Override
