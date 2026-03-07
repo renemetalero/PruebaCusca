@@ -86,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(readOnly = true)
     public List<OrderRegistrationResponse> getAllOrders() {
         log.info("[OrderService] getAllOrders");
-        return orderRepository.findAllByPaymentStatus(PaymentStatus.APPROVED).stream()
+        return orderRepository.findAllByEnabledTrue().stream()
                 .map(o -> toResponse(o, null, null))
                 .toList();
     }

@@ -54,10 +54,10 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldGetAllOrders() {
+    void shouldGetAllOrdersOnlyEnabled() {
         Client client = Client.builder().id(1L).firstName("Rene").lastName("-").email("rene@local").build();
         OrderEntity order = OrderEntity.builder().id(1L).client(client).enabled(true).build();
-        when(orderRepository.findAllByPaymentStatus(com.shoppingcart.api.entity.PaymentStatus.APPROVED)).thenReturn(java.util.List.of(order));
+        when(orderRepository.findAllByEnabledTrue()).thenReturn(java.util.List.of(order));
 
         java.util.List<OrderRegistrationResponse> result = orderService.getAllOrders();
 

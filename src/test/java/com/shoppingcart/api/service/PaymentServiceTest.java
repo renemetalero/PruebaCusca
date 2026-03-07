@@ -68,11 +68,11 @@ class PaymentServiceTest {
     }
 
     @Test
-    void shouldGetAllPaymentsOnlyApproved() {
+    void shouldGetAllPaymentsOnlyEnabled() {
         OrderEntity order = OrderEntity.builder().id(10L).status(OrderStatus.PAID).enabled(true).build();
         Payment approved = Payment.builder().id(1L).order(order).status(PaymentStatus.APPROVED).amount(new BigDecimal("10.00")).enabled(true).build();
 
-        when(paymentRepository.findAllByStatusOrderByProcessedAtDesc(PaymentStatus.APPROVED)).thenReturn(java.util.List.of(approved));
+        when(paymentRepository.findAllByEnabledTrueOrderByProcessedAtDesc()).thenReturn(java.util.List.of(approved));
 
         java.util.List<PaymentRegistrationResponse> result = paymentService.getAllPayments();
 
